@@ -1,0 +1,31 @@
+GET http://localhost:3003/user/all
+Content-Type: application/json
+
+####
+POST http://localhost:3003/user/create
+Content-Type: application/json
+
+{
+    "name": "Jordhan",
+    "email": "jojo@cotoco",
+    "password": "12345623"
+}
+
+### 
+GET http://localhost:3003/post/all
+Content-Type: application/json
+
+####
+GET http://localhost:3003/post/234324
+Content-Type: application/json
+
+####
+POST http://localhost:3003/post/create
+Content-Type: application/json
+
+{
+    "photo": "https://st2.depositphotos.com/5648852/8444/i/450/depositphotos_84445256-stock-photo-vermelha-beach-and-sugar-loaf.jpg",
+    "description": "teste",
+    "type": "normal",
+    "authorId": "1674927584780"
+}
