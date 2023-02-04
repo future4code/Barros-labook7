@@ -32,4 +32,21 @@ export class EmailAlreadyCadasted extends UserCustomError{
   constructor(){
     super(422,"Email já cadastrado")
   }
-}
+};
+
+export class InvalidPassword extends UserCustomError{
+  constructor(){
+    super(409,"Senha invalida, deve conter 6 ou mais caracteres")
+  }
+};
+export class UnauthorizedUser extends UserCustomError{ 
+  constructor(){
+      super(401, "Usuário não autorizado")
+  }
+};
+
+export class UserNotFound extends UserCustomError{ 
+  constructor(){
+    super(404, "Usuário não encontrado")
+  }
+};

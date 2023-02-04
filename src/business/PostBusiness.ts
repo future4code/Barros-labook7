@@ -3,9 +3,11 @@ import { PostDTO, PostT, POST_TYPES } from "../model/PostTypes";
 import { InvalidBody, InvalidPhotoLength, InvalidTypePost, PostCustomError, PostTypeIncorrect } from "../customError/PostCustomError";
 import { PostDatabase } from "../data/mySQL/PostDatabase";
 import { type } from "os";
+import { IdGenerator } from "../services/IdGenerator";
 
 export class PostBusiness {
   constructor(private postDatabase: PostDatabase){};
+  private idGenerator = new IdGenerator() 
 
   createPost =async (input:PostT):Promise<void> => {
     try{
@@ -22,7 +24,7 @@ export class PostBusiness {
         throw new InvalidPhotoLength
       }
 
-      const postId = Date.now().toString();
+      const postId = this.idGenerator.generateId();
       const localDateTime = new Date();
       const newPost:PostDTO = {
         id:postId,
