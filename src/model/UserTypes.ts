@@ -11,3 +11,19 @@ export type UserT = {
   password: string
 };
 
+
+export type InputFriend = {
+  token: string,
+  friendId: string
+};
+
+export interface InputFriendDTO {
+  id:string,
+  user_id:string,
+  friend_id:string
+};
+
+export type LoginInput = {
+  email: string,
+  password: string
+};

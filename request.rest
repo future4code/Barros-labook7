@@ -1,25 +1,39 @@
+### Pegar Todos usuarios
 GET http://localhost:3003/user/all
 Content-Type: application/json
 
-####
+### Cria usuario
 POST http://localhost:3003/user/create
 Content-Type: application/json
 
 {
-    "name": "Jordhan",
-    "email": "jojo@cotoco",
-    "password": "12345623"
+    "name": "batman",
+    "email": "batman@out.com",
+    "password": "123445"
 }
 
-### 
-GET http://localhost:3003/post/all
+### Login
+POST http://localhost:3003/user/login
 Content-Type: application/json
 
-####
-GET http://localhost:3003/post/234324
-Content-Type: application/json
+{
+    "email": "miranha@out.com",
+    "password": "123445"
+}
 
-####
+### Fazer amizade
+POST http://localhost:3003/user/addFriend
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRiYWRkYjI4LTdkYjYtNGEyNS1hNTA1LTdjMDZhYjk0ODliNiIsImlhdCI6MTY3NTUyMTA0MSwiZXhwIjoxNjc1NTM5MDQxfQ.rKSJJHVcfgs7HsZtgX6Q8zXTXFCb3kjcQilcKqpn1To
+
+{
+    "friendId": "356f9bf2-57cc-403d-96ab-8a3cadcec806"
+}
+
+
+### Abaixo todos os metodos relacionados aos endpoints de posts
+
+#### Criar um post
 POST http://localhost:3003/post/create
 Content-Type: application/json
 
@@ -27,5 +41,15 @@ Content-Type: application/json
     "photo": "https://st2.depositphotos.com/5648852/8444/i/450/depositphotos_84445256-stock-photo-vermelha-beach-and-sugar-loaf.jpg",
     "description": "teste",
     "type": "normal",
-    "authorId": "1674927584780"
+    "authorId": ""
 }
+
+### Buscar todos posts
+GET http://localhost:3003/post/all
+Content-Type: application/json
+
+#### Buscar post por id
+GET http://localhost:3003/post/1675001547539
+Content-Type: application/json
+
+
