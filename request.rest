@@ -1,55 +1,85 @@
-### Pegar Todos usuarios
+### PEGAR TODOS USUÁRIOS
 GET http://localhost:3003/user/all
 Content-Type: application/json
 
-### Cria usuario
+### EXIBIR LISTA DE AMIGOS, PRECISA PASSAR O TOKEN
+GET http://localhost:3003/user/friends
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRiYWRkYjI4LTdkYjYtNGEyNS1hNTA1LTdjMDZhYjk0ODliNiIsImlhdCI6MTY3NTU1NzA5OSwiZXhwIjoxNjc1NTc1MDk5fQ.ZI13noMBqfDcYYr5gQHgXrx52sxISeXV7mqbmbW66H8
+
+### CRIAR USUÁRIO
 POST http://localhost:3003/user/create
 Content-Type: application/json
 
 {
-    "name": "batman",
-    "email": "batman@out.com",
-    "password": "123445"
+    "name": "miranha",
+    "email": "miranha@out.com",
+    "password": "tiamei23423"
 }
 
-### Login
+### NO PROJETO ESTOU ULTILIZANDO O BCRYPT ENTAO
+### VOU DEIXAR ALGUNS LOGINS AQUI SALVOS PARA TESTAR OS ENDPOINTS
+### email "diego@out.com",senha "123445123"
+### email "deaoriginal@out.com",senha "sdije234qwe"
+### email "israel@out.com",senha "sdi3234dfe234qwe"
+### email "junior@out.com",senha "sdidfq4dfe234qwe"
+### email "batman@out.com",senha "ligadajustica"
+### email "ironman@out.com",senha "soumaior123"
+### email "miranha@out.com",senha "tiamei23423"
+
+### FAÇA O LOGIN ABAIXO PARA PEGAR O TOKEN
 POST http://localhost:3003/user/login
 Content-Type: application/json
 
 {
-    "email": "miranha@out.com",
-    "password": "123445"
+    "email": "junior@out.com",
+    "password": "sdidfq4dfe234qwe"
 }
 
-### Fazer amizade
+### FAZER AMIZADE, PRECISA DO TOKEN E O ID DO USUARIO QUE VOCE QUER FAZER AMIZADE
+### PEGUE O TOKEN NO LOGIN OU CRIANDO UM NOVO USUÁRIO
 POST http://localhost:3003/user/addFriend
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRiYWRkYjI4LTdkYjYtNGEyNS1hNTA1LTdjMDZhYjk0ODliNiIsImlhdCI6MTY3NTUyMTA0MSwiZXhwIjoxNjc1NTM5MDQxfQ.rKSJJHVcfgs7HsZtgX6Q8zXTXFCb3kjcQilcKqpn1To
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjMGFhN2ZjLTAwZmMtNDllYS05MzEyLTE3NGQ1YTJkMDBkNCIsImlhdCI6MTY3NTU2Nzk1OSwiZXhwIjoxNjc1NTg1OTU5fQ.iy6xct-97FW0sT4hbPeIIADWAt70MoId_8NCyMhLqnA
+
+{
+    "friendId": "9716e2d2-b8a8-4561-9ad4-cb032a142d75"
+}
+
+### REMOVER AMIZADE 
+### NECESSÁRIO UM TOKEN
+DELETE http://localhost:3003/user/deleteFriend
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRiYWRkYjI4LTdkYjYtNGEyNS1hNTA1LTdjMDZhYjk0ODliNiIsImlhdCI6MTY3NTU1NzA5OSwiZXhwIjoxNjc1NTc1MDk5fQ.ZI13noMBqfDcYYr5gQHgXrx52sxISeXV7mqbmbW66H8
 
 {
     "friendId": "356f9bf2-57cc-403d-96ab-8a3cadcec806"
 }
 
-
 ### Abaixo todos os metodos relacionados aos endpoints de posts
 
-#### Criar um post
+#### CRIAR UM POST
 POST http://localhost:3003/post/create
 Content-Type: application/json
 
 {
     "photo": "https://st2.depositphotos.com/5648852/8444/i/450/depositphotos_84445256-stock-photo-vermelha-beach-and-sugar-loaf.jpg",
-    "description": "teste",
+    "description": "post israel",
     "type": "normal",
-    "authorId": ""
+    "authorId": "9716e2d2-b8a8-4561-9ad4-cb032a142d75"
 }
 
-### Buscar todos posts
+### EXIBIR TODOS OS POSTS
 GET http://localhost:3003/post/all
 Content-Type: application/json
 
-#### Buscar post por id
-GET http://localhost:3003/post/1675001547539
+#### BUSCAR POST POR ID
+GET http://localhost:3003/post/post/1675001547539
 Content-Type: application/json
 
 
+### BUSCAR TODOS OS POSTS DOS AMIGOS ORDENADOS 
+### NECESSÁRIO UM TOKEN 
+GET http://localhost:3003/post/friends
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjMGFhN2ZjLTAwZmMtNDllYS05MzEyLTE3NGQ1YTJkMDBkNCIsImlhdCI6MTY3NTU2Nzk1OSwiZXhwIjoxNjc1NTg1OTU5fQ.iy6xct-97FW0sT4hbPeIIADWAt70MoId_8NCyMhLqnA

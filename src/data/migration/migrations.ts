@@ -1,11 +1,11 @@
 // import { connection } from "./index"
 
-import { BaseDatabase } from "./data/mySQL/BaseDatabase";
+import { BaseDatabase } from "../mySQL/BaseDatabase";
 
 export class Migration extends BaseDatabase{
 
   public migrationExec = async () => {
-    await Migration.connection.raw(`
+   await Migration.connection.raw(`
       DROP TABLE IF EXISTS Labook_posts;
       DROP TABLE IF EXISTS Labook_friends;
       DROP TABLE IF EXISTS Labook_users;

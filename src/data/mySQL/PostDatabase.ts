@@ -6,7 +6,7 @@ import { PostCustomError } from "../../customError/PostCustomError";
 export class PostDatabase extends BaseDatabase implements PostRepository {
   Table_name = "Labook_posts";
 
-  createPost = async (input:PostDTO) => {
+  public createPost = async (input:PostDTO) => {
     try{
       const newPost:PostDTO = {
         id:input.id,
@@ -22,7 +22,8 @@ export class PostDatabase extends BaseDatabase implements PostRepository {
       throw new PostCustomError(error.statusCode, error.message);
     }
   };
-  getAllPosts = async ():Promise<PostDTO[]> => {
+  //  ------ ------- ----- ---- ---- -- ---- -//
+  public getAllPosts = async ():Promise<PostDTO[]> => {
     try{
       const allPosts = await PostDatabase.connection(this.Table_name).select()
       return allPosts
@@ -30,13 +31,28 @@ export class PostDatabase extends BaseDatabase implements PostRepository {
       throw new PostCustomError(error.statusCode, error.message);
     };
   };
-  getPostById = async (id:string):Promise<PostDTO[]> => {
+  //  ------ ------- ----- ---- ---- -- ---- -//
+  public getPostById = async (id:string):Promise<PostDTO[]> => {
     try{
       const post = await PostDatabase.connection(this.Table_name).where("id",id)
       return post
     }catch(error:any){
       throw new PostCustomError(error.statusCode, error.message);
     };
-  }
+  };
+  //  ------ ------- ----- ---- ---- -- ---- -//
+  public getFriendPosts = async (userId: string):Promise<PostDTO[]> =>{
+    try{
+      const postFriends = await PostDatabase.connection.raw(`
+      SELECT Labook_posts.id,photo,description,type,created_at,author_id 
+      FROM Labook_posts INNER JOIN Labook_friends
+       ON friend_id = author_id WHERE "${userId}" = user_id 
+        ORDER BY created_at DESC;
+      `)
+      return postFriends[0]
+    }catch(error:any){
+      throw new PostCustomError(error.statusCode, error.message);
+    };
+  };
 
 };

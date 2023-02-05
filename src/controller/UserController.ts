@@ -5,7 +5,7 @@ import { InputFriend, LoginInput, UserDTO, UserT } from "../model/UserTypes";
 export class UserController {
   constructor(private userBusines: UserBusiness){}
 
-  createNewUser = async (req:Request, res:Response):Promise<void> => {
+  public createNewUser = async (req:Request, res:Response):Promise<void> => {
     try{
       const {name, email, password} = req.body;
 
@@ -21,7 +21,8 @@ export class UserController {
       res.status(error.statusCode || 400).send(error.message || error.sqlMessage);
     }
   };
-  addFriend = async (req:Request, res:Response):Promise<void> => {
+  //  ------ ------- ----- ---- ---- -- ---- -//
+  public addFriend = async (req:Request, res:Response):Promise<void> => {
     try{
       const token:string = req.headers.authorization as string
       const users:InputFriend = {
@@ -35,7 +36,23 @@ export class UserController {
       res.status(error.statusCode || 400).send(error.message || error.sqlMessage);
     }
   };
-  login = async (req:Request, res:Response):Promise<void> => {
+  //  ------ ------- ----- ---- ---- -- ---- -//
+  public removeFriend = async (req:Request, res:Response):Promise<void> => {
+    try{
+      const token:string = req.headers.authorization as string
+      const users:InputFriend = {
+        token:token,
+        friendId: req.body.friendId
+      }
+      await this.userBusines.removeFriend(users);
+
+      res.status(201).send({ message: "Amizade desfeita"});
+    }catch(error:any){
+      res.status(error.statusCode || 400).send(error.message || error.sqlMessage);
+    }
+  };
+  //  ------ ------- ----- ---- ---- -- ---- -//
+  public login = async (req:Request, res:Response):Promise<void> => {
     try{
       const inputLogin:LoginInput = {
         email: req.body.email,
@@ -49,12 +66,23 @@ export class UserController {
       res.status(error.statusCode || 400).send(error.message || error.sqlMessage);
     }
   };
-
-  getUsers = async (req:Request, res:Response):Promise<void> => {
+  //  ------ ------- ----- ---- ---- -- ---- - --- - -- - - - - -//
+  public getUsers = async (req:Request, res:Response):Promise<void> => {
     try{
       const allUsers:UserDTO[] | string = await this.userBusines.getUsers();
 
       res.status(200).send(allUsers);
+    }catch(error:any){
+      res.status(error.statusCode || 400).send(error.message || error.sqlMessage);
+    }
+  };
+  //  ------ ------- ----- ---- ---- -- ---- -//
+  public getFriends = async (req:Request, res:Response):Promise<void> => {
+    try{
+      const token:string = req.headers.authorization as string;
+
+      const friendList = await this.userBusines.getFriends(token)
+      res.status(200).send(friendList);
     }catch(error:any){
       res.status(error.statusCode || 400).send(error.message || error.sqlMessage);
     }
