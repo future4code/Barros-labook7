@@ -2,14 +2,16 @@
 import { PostDTO, PostT, POST_TYPES } from "../model/PostTypes";
 import { InvalidBody, InvalidPhotoLength, InvalidTypePost, PostCustomError, PostTypeIncorrect } from "../customError/PostCustomError";
 import { PostDatabase } from "../data/mySQL/PostDatabase";
-import { type } from "os";
 import { IdGenerator } from "../services/IdGenerator";
+import { TokenGenerator } from "../services/TokenGenerator";
+import { UnauthorizedUser } from "../customError/UserCustomError";
 
 export class PostBusiness {
   constructor(private postDatabase: PostDatabase){};
   private idGenerator = new IdGenerator() 
+  private tokenGenerate = new TokenGenerator();
 
-  createPost =async (input:PostT):Promise<void> => {
+  public createPost =async (input:PostT):Promise<void> => {
     try{
       const { photo, description, type, authorId } = input;
       if(!photo || !description || !type || !authorId){
@@ -40,8 +42,8 @@ export class PostBusiness {
       throw new PostCustomError(error.statusCode, error.message);
     }
   };
-
-  getAllPosts = async ():Promise<PostDTO[]> => {
+  //  ------ ------- ----- ---- ---- -- ---- -//
+  public getAllPosts = async ():Promise<PostDTO[]> => {
     try{
       const allPosts = await this.postDatabase.getAllPosts()
       return allPosts
@@ -49,8 +51,8 @@ export class PostBusiness {
       throw new PostCustomError(error.statusCode, error.message);
     };
   };
-
-  getPostById = async (id:string):Promise<PostDTO[]> => {
+  //  ------ ------- ----- ---- ---- -- ---- -//
+  public getPostById = async (id:string):Promise<PostDTO[]> => {
     try{
       if(!id || id === ":id"){
         throw new PostCustomError(422,"Insira um id")    
@@ -64,5 +66,24 @@ export class PostBusiness {
     }catch(error:any){
       throw new PostCustomError(error.statusCode, error.message);
     };
-  }
+  };
+  //  ------ ------- ----- ---- ---- -- ---- -//
+  public getFriendPosts = async (token:string):Promise<PostDTO[]> => {
+    try{
+      if(!token){
+        throw new PostCustomError(422,"É esparado o token do usuário logado")
+      };
+      
+      const tokenData = this.tokenGenerate.tokenData(token)
+      
+      if(!tokenData.id) {
+        throw new UnauthorizedUser()
+      };
+
+      const listFriendsPosts = await this.postDatabase.getFriendPosts(tokenData.id);
+      return listFriendsPosts;
+    }catch(error:any){
+      throw new PostCustomError(error.statusCode, error.message);
+    };
+  };
 }   

@@ -4,6 +4,5 @@ import { userRouter } from "./routes/userRouter";
 
 
 
-
 app.use("/user",userRouter);
 app.use("/post",postRouter);

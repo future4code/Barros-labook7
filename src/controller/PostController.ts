@@ -30,12 +30,22 @@ export class PostController {
       res.status(error.statusCode || 400).send(error.message || error.sqlMessage);
     };
   };
-  getPostById =async (req:Request, res:Response):Promise<void> => {
+  getPostById = async (req:Request, res:Response):Promise<void> => {
     try{
       const id = req.params.id
 
       const post = await this.postBusiness.getPostById(id)
       res.status(200).send(post)
+    }catch(error:any){
+      res.status(error.statusCode || 400).send(error.message || error.sqlMessage);
+    };
+  }
+  getFriendPosts = async (req:Request, res:Response):Promise<void> => {
+    try{
+      const token = req.headers.authorization as string;
+
+      const friendPosts = await this.postBusiness.getFriendPosts(token)
+      res.status(200).send(friendPosts)
     }catch(error:any){
       res.status(error.statusCode || 400).send(error.message || error.sqlMessage);
     };

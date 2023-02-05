@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "dev": "ts-node-dev ./src/index.ts",
     "start": "tsc && node ./build/index.js",
-    "migrations": "tsc && node ./build/migrations.js"
+    "migrations": "tsc && node ./build/data/migration/migrations.js"  
   },
   "keywords": [],
   "author": "",
