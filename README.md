@@ -19,7 +19,7 @@ Desenvolvido com arquitetura de softwere 3 camadas, arquitetura limpa, autentica
 
 ---
 ## 📚 Deploy no Render
-<a href="https://api-labook-7.onrender.com" target="_blank">Deploy no Render</a>
+"https://api-labook-7.onrender.com"
 
 
 ---
